@@ -29,10 +29,10 @@ public class ShipScript : MonoBehaviour
     void Update()
     {
 
-        /*if(pause)
+        if(pause)
         {
             return;
-        }*/
+        }
 
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
