@@ -29,10 +29,10 @@ public class ShipScript : MonoBehaviour
     void Update()
     {
 
-        /*if(pause)
+        if(pause)
         {
             return;
-        }*/
+        }
 
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
@@ -54,6 +54,17 @@ public class ShipScript : MonoBehaviour
         //Instantiate(lazerShot, lazerGun.transform.position, Quaternion.identity);
     }
 
+    public static void castShield()
+    {
+        bool shield = true;
+    }
+
+    public static void decreaseSpeed()
+    {
+        Debug.Log("3 sec proshlo");
+        speed = constSpeed;
+    }
+
     public static void increaseSpeed(float speedMultiplier)
     {
         speed = speed * speedMultiplier;
@@ -73,8 +84,8 @@ public class ShipScript : MonoBehaviour
         speed = constSpeed;
     }
 
-    //public static void castShield()
-    //{
-    //    bool shield = true;
-    //}
+    public static void castShield()
+    {
+        bool shield = true;
+    }
 }
