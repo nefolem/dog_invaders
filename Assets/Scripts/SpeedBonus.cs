@@ -9,12 +9,10 @@ public class SpeedBonus : MonoBehaviour
 
     [SerializeField]
     private float speedMultiplier;
-
-    float timer = 0;
-
+    
     private void Update()
     {
-        
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -28,8 +26,9 @@ public class SpeedBonus : MonoBehaviour
             //Instantiate(speedEffect, other.transform.position, Quaternion.identity);
             //ShipScript.increaseSpeed(speedMultiplier);
             //Debug.Log("start increase");
-            StartCoroutine(SpeedTimer());
-            //Destroy(gameObject);
+            ShipScript.speedBonus = true;
+            
+            Destroy(gameObject);
 
 
 
@@ -37,14 +36,5 @@ public class SpeedBonus : MonoBehaviour
         
         //Destroy(gameObject);
 
-    }
-
-    IEnumerator SpeedTimer()
-    {
-        Debug.Log("start");
-        yield return new WaitForSeconds(3);
-        Debug.Log("end");
-        //ShipScript.decreaseSpeed();
-        
     }
 }

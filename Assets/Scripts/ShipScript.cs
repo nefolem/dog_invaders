@@ -18,6 +18,9 @@ public class ShipScript : MonoBehaviour
 
     Rigidbody ship;
 
+    [HideInInspector] public static bool speedBonus, shieldBonus, tripleFireBonus, fastFireBonus, lifeBonus = false;
+    static float timer = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,11 +31,6 @@ public class ShipScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if(pause)
-        {
-            return;
-        }
 
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
@@ -52,30 +50,28 @@ public class ShipScript : MonoBehaviour
         }
 
         //Instantiate(lazerShot, lazerGun.transform.position, Quaternion.identity);
+
+        if(speedBonus)
+            increaseSpeed(60);
+
     }
 
-    public static void castShield()
-    {
-        bool shield = true;
-    }
-
-    public static void decreaseSpeed()
-    {
-        Debug.Log("3 sec proshlo");
-        speed = constSpeed;
-    }
 
     public static void increaseSpeed(float speedMultiplier)
     {
-        speed = speed * speedMultiplier;
+        Debug.Log("start");
+        speed = speedMultiplier;
 
-        //float timer = 0;
-        //timer += Time.deltaTime;
-        //if(timer > 3)
-        //{
-        //    Debug.Log("3 sec proshlo");
-        //    speed = constSpeed;
-        //}
+
+        timer += Time.deltaTime;
+        Debug.Log(timer);
+        if(timer > 3.0f)
+        {
+            Debug.Log("3 sec proshlo");
+            speed = constSpeed;
+            timer = 0;
+            speedBonus = false;
+        }
     }
 
     public static void decreaseSpeed()

@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,27 +32,28 @@ public class EmitterScript : MonoBehaviour
                 transform.position.z
                 );
 
-            if (Random.Range(1, 15) == 3)
+            if (Random.Range(1, 4) == 3)
             {
-                float temp = Random.Range(1, 5);
-                switch (temp)
-                {
-                    case 1: 
-                        Instantiate(speedBonus, pos, Quaternion.identity);
-                        break;
-                    case 2:
-                        Instantiate(shieldBonus, pos, Quaternion.identity);
-                        break;
-                    case 3:
-                        Instantiate(tripleFireBonus, pos, Quaternion.identity);
-                        break;
-                    case 4:
-                        Instantiate(fastFireBonus, pos, Quaternion.identity);
-                        break;
-                    case 5:
-                        Instantiate(lifeBonus, pos, Quaternion.identity);
-                        break;
-                }
+                //float temp = Random.Range(1, 5);
+                Instantiate(speedBonus, pos, Quaternion.identity);
+                // switch (temp)
+                // {
+                //     case 1: 
+                //         Instantiate(speedBonus, pos, Quaternion.identity);
+                //         break;
+                //     case 2:
+                //         Instantiate(shieldBonus, pos, Quaternion.identity);
+                //         break;
+                //     case 3:
+                //         Instantiate(tripleFireBonus, pos, Quaternion.identity);
+                //         break;
+                //     case 4:
+                //         Instantiate(fastFireBonus, pos, Quaternion.identity);
+                //         break;
+                //     case 5:
+                //         Instantiate(lifeBonus, pos, Quaternion.identity);
+                //         break;
+                // }
                 
             }
             else
