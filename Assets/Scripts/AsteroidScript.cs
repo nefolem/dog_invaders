@@ -27,7 +27,7 @@ public class AsteroidScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
    
-        if(other.tag == "Bound" || other.tag == "Asteroid")
+        if(other.tag == "Bound" || other.tag == "Asteroid" || other.tag == "Bonus")
         {
             return;
         } 
@@ -38,7 +38,7 @@ public class AsteroidScript : MonoBehaviour
                 Instantiate(playerExplosion, other.transform.position, Quaternion.identity);
                 Destroy(other.gameObject);
             }
-            GameController.increaseLives(-1);
+            GameController.decreaseLives(-1);
         } 
         else
         {

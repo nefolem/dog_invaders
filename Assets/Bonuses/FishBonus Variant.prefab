@@ -160,6 +160,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FishBonus Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 100090, guid: 39d1d561405e53c4fb35e73a03627611, type: 3}
+      propertyPath: m_TagString
+      value: Bonus
+      objectReference: {fileID: 0}
     - target: {fileID: 400090, guid: 39d1d561405e53c4fb35e73a03627611, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedBonus : MonoBehaviour
+public class LifeBonus : MonoBehaviour
 {
     [SerializeField]
-    private GameObject speedEffect;
+    private GameObject lifeEffect;
 
-    [SerializeField]
-    private float speedMultiplier;
+    // [SerializeField]
+    // private float speedMultiplier;
     
     private void Update()
     {
@@ -17,7 +17,7 @@ public class SpeedBonus : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        if (other.tag == "Bound" || other.tag == "Asteroid")
+        if (other.tag == "Bound" || other.tag == "Asteroid" || other.tag == "Bonus")
         {
             return;
         }
@@ -26,15 +26,11 @@ public class SpeedBonus : MonoBehaviour
             //Instantiate(speedEffect, other.transform.position, Quaternion.identity);
             //ShipScript.increaseSpeed(speedMultiplier);
             //Debug.Log("start increase");
-            ShipScript.speedBonus = true;
+            ShipScript.lifeBonus = true;
             
             Destroy(gameObject);
 
-
-
         }
         
-        //Destroy(gameObject);
-
     }
 }

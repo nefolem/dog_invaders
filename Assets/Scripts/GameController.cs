@@ -14,8 +14,9 @@ public class GameController : MonoBehaviour
 
     private static string lives;
     
-
     public static bool gameOver = false;
+
+    public static bool shield = false;
 
 
     public static void increaseScore(int increment)
@@ -23,19 +24,32 @@ public class GameController : MonoBehaviour
         score += increment;
     }
 
-    public static void increaseLives(int hearts)
+    public static void decreaseLives(int hearts)
     {
-        lives = lives.Remove(lives.Length + hearts);
-        if (lives.Length < 1)
+        if(shield == false)
         {
-            gameOver = true;
+            lives = lives.Remove(lives.Length + hearts);
+            if (lives.Length == 1)
+            {
+                gameOver = true;
+            }
         }
+        else return;
+    }
+
+    public static void increaseLives()
+    {       
+        if (lives.Length > 7)
+        {
+            return;
+        }
+        lives = lives.Insert(0, "♥");
     }
 
     private void Start()
     {
         score = 0;
-        lives = "♥♥♥♥♥♥♥♥♥";
+        lives = "♥♥♥";
 
     }
 

@@ -5688,7 +5688,7 @@ MonoBehaviour:
   lifeBonus: {fileID: 4813576057788013676, guid: 6a2031fad087baf4ea443c6e95619fe8, type: 3}
   minDelay: 1
   maxDelay: 2
-  step: 0.01
+  step: 0.02
 --- !u!23 &1810327075
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7063,7 +7063,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lazerShot: {fileID: 5117839627213802047, guid: 9278056c6247f1944997afcb21ceb555, type: 3}
   lazerGun: {fileID: 645808902}
-  shotDelay: 0.3
+  constShotDelay: 0.4
+  constSpeed: 30
   xMin: -19
   xMax: 19
   zMin: -27
