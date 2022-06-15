@@ -5,7 +5,7 @@ using UnityEngine;
 public class AsteroidScript : MonoBehaviour
 {
     [SerializeField]
-    private GameObject asteroidExplosion, playerExplosion;
+    private GameObject asteroidExplosion;
 
     [SerializeField]
     private float moveSpeed, rotationSpeed;
@@ -27,23 +27,25 @@ public class AsteroidScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
    
-        if(other.tag == "Bound" || other.tag == "Asteroid" || other.tag == "Bonus")
+        if(other.tag == "Lazer")
         {
-            return;
+            GameController.increaseScore(+10);
+            Destroy(other.gameObject);
+            
         } 
         else if(other.tag == "Player")
         {
             if (GameController.gameOver == true)
             {
-                Instantiate(playerExplosion, other.transform.position, Quaternion.identity);
-                Destroy(other.gameObject);
+                // Instantiate(playerExplosion, other.transform.position, Quaternion.identity);
+                // Debug.Log("boom");
+                
             }
-            GameController.decreaseLives(-1);
+            GameController.decreaseLives(1);
         } 
         else
         {
-            GameController.increaseScore(+10);
-            Destroy(other.gameObject);
+            return;
         }
 
         Instantiate(asteroidExplosion, transform.position, Quaternion.identity);

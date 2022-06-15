@@ -3,17 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LifeBonus : MonoBehaviour
-{
-    [SerializeField]
-    private GameObject lifeEffect;
-
-    // [SerializeField]
-    // private float speedMultiplier;
-    
-    private void Update()
-    {
-
-    }
+{    
     private void OnTriggerEnter(Collider other)
     {
 
@@ -23,13 +13,8 @@ public class LifeBonus : MonoBehaviour
         }
         else if (other.tag == "Player")
         {
-            //Instantiate(speedEffect, other.transform.position, Quaternion.identity);
-            //ShipScript.increaseSpeed(speedMultiplier);
-            //Debug.Log("start increase");
             ShipScript.lifeBonus = true;
-            
             Destroy(gameObject);
-
         }
         
     }

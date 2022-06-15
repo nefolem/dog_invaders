@@ -8,6 +8,8 @@ TagManager:
   - Bound
   - Asteroid
   - Bonus
+  - Lazer
+  - Boss
   layers:
   - Default
   - TransparentFX

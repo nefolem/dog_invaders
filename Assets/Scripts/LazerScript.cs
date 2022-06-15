@@ -14,7 +14,7 @@ public class LazerScript : MonoBehaviour
     {
         if(tripleFire == false)
         {
-            transform.FindChild("triple").gameObject.SetActive(false);
+            transform.Find("triple").gameObject.SetActive(false);
             GetComponent<Rigidbody>().velocity = new Vector3(0, 0, speed);
             GetComponent<Rigidbody>().rotation = Quaternion.identity;
         }
@@ -22,7 +22,7 @@ public class LazerScript : MonoBehaviour
         {
             GetComponent<Rigidbody>().velocity = new Vector3(0, 0, speed);
             GetComponent<Rigidbody>().rotation = Quaternion.identity;
-            transform.FindChild("triple").gameObject.SetActive(true);
+            transform.Find("triple").gameObject.SetActive(true);
 
         }
 

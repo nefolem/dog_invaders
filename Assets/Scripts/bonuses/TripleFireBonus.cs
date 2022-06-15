@@ -4,31 +4,16 @@ using UnityEngine;
 
 public class TripleFireBonus : MonoBehaviour
 {
-    
-    // [SerializeField]
-    // private float speedMultiplier;
-    
-    private void Update()
-    {
-
-    }
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.tag == "Bound" || other.tag == "Asteroid" || other.tag == "Bonus")
         {
             return;
         }
         else if (other.tag == "Player")
         {
-            //Instantiate(speedEffect, other.transform.position, Quaternion.identity);
-            //ShipScript.increaseSpeed(speedMultiplier);
-            //Debug.Log("start increase");
-            ShipScript.tripleFireBonus = true;
-            
+            ShipScript.tripleFireBonus = true;            
             Destroy(gameObject);
-
-        }
-        
+        }        
     }
 }

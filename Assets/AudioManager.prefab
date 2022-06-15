@@ -47,6 +47,8 @@ MonoBehaviour:
   myFX: {fileID: 8342958036418225153}
   hoverFx: {fileID: 8300000, guid: 9de752cd0c7642d4b845e9605748bde2, type: 3}
   clickFx: {fileID: 8300000, guid: a00a27dacfcc94b4abbe9ec734a8abea, type: 3}
+  warningFx: {fileID: 8300000, guid: 3d82b2ab057610640a536516740176f4, type: 3}
+  bossFightFX: {fileID: 8300000, guid: b12254d4f81298f4e893d34a4aae7d9a, type: 3}
 --- !u!82 &8342958036418225153
 AudioSource:
   m_ObjectHideFlags: 0
@@ -57,11 +59,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: b12254d4f81298f4e893d34a4aae7d9a, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.408
+  m_Volume: 0.38
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
