@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ShipScript : MonoBehaviour
 {
@@ -11,22 +12,27 @@ public class ShipScript : MonoBehaviour
     private GameObject playerExplosion, shieldEffect, lifeEffect, speedEffect;
 
     [SerializeField]
+    private Joystick joystick;
+
+    [SerializeField]
     private float constShotDelay;
     private float shotDelay;
     private float nextShotTime = 0;
 
+
     [SerializeField] private float constSpeed = 30;
     private float speed;
+
+
     [SerializeField] private float xMin, xMax, zMin, zMax;
     [SerializeField] private float tilt;
+
 
     Rigidbody ship;
 
     [HideInInspector] public static bool speedBonus, shieldBonus, tripleFireBonus, fastFireBonus, lifeBonus = false;
     float timer = 0;
 
-    Shader shader1;
-    Renderer rend;
 
     // Start is called before the first frame update
     void Start()
@@ -34,16 +40,14 @@ public class ShipScript : MonoBehaviour
         speed = constSpeed;
         shotDelay = constShotDelay;
         ship = GetComponent<Rigidbody>();
-        rend = GetComponent<Renderer> ();
-        shader1 = Shader.Find("Standard");
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        float moveHorizontal = joystick.Horizontal;
+        float moveVertical = joystick.Vertical;
 
         ship.velocity = new Vector3(moveHorizontal, 0, moveVertical) * speed; // x y z
         ship.rotation = Quaternion.Euler(ship.velocity.z * tilt, 0, -ship.velocity.x * tilt);
@@ -81,7 +85,6 @@ public class ShipScript : MonoBehaviour
         }
 
     }
-
 
     public void increaseSpeed(float speedMultiplier)
     {
@@ -146,11 +149,5 @@ public class ShipScript : MonoBehaviour
         GameController.increaseLives();
         lifeBonus = false;
     }
-
-    public void getDamaged()
-    {
-        rend.material.shader = shader1;
-    }
-
 
 }

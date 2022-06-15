@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
     private TMP_Text scoreLabel, scoreLabel2, scoreLabel3, livesLabel, bestScoreLabel, bestScoreLabel2, bestScoreLabel3;
 
     [SerializeField]
-    private GameObject warningText;
+    private GameObject warningText, stageText;
 
     public Slider progressBar;
     public AudioMixer audioMixer;
@@ -31,7 +31,8 @@ public class GameController : MonoBehaviour
     public static bool stopEmitter = false;
     public static bool stageComplete = false;
 
-    private float timer = 0;
+    private float timer2, timer1 = 0;
+
 
 
     public static void increaseScore(int increment)
@@ -84,6 +85,12 @@ public class GameController : MonoBehaviour
         scoreLabel2.text = scoreLabel3.text = " \n " + scoreLabel.text;
         progressBar.value = score;
 
+        timer1 += Time.deltaTime;
+        if (timer1 > 1.5f)
+        {
+            stageText.SetActive(false);
+        }
+
         if (!stageComplete)
         {
             if (score >= 500)
@@ -98,8 +105,8 @@ public class GameController : MonoBehaviour
 
             if (stopEmitter)
             {
-                timer += Time.deltaTime;
-                if (timer > 4)
+                timer2 += Time.deltaTime;
+                if (timer2 > 4)
                 {
                     warningText.SetActive(false);
                     bossFight = true;
