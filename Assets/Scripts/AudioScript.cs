@@ -7,6 +7,11 @@ public class AudioScript : MonoBehaviour
     public AudioSource myFX;
     public AudioClip hoverFx;
     public AudioClip clickFx;
+    public AudioClip warningFx;
+    public AudioClip bossFightFX;
+
+    private bool isWarnPlaying, isBossFightPlaying = false;
+
 
 
     public void HoverSound()
@@ -18,4 +23,31 @@ public class AudioScript : MonoBehaviour
     {
         myFX.PlayOneShot(clickFx);
     }
+
+    public void WarningSound()
+    {
+        if (!isWarnPlaying)
+        {
+            myFX.PlayOneShot(warningFx);
+            isWarnPlaying = true;
+        }
+
+    }
+    public void BossFightSound(bool play)
+    {
+        if (play)
+        {
+            if (!isBossFightPlaying)
+            {
+                myFX.Play();
+                isBossFightPlaying = true;
+            }
+        }
+        else if (!play)
+        {
+            myFX.Stop();
+        }
+
+    }
+
 }

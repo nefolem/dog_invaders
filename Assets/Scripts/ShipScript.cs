@@ -8,84 +8,149 @@ public class ShipScript : MonoBehaviour
     private GameObject lazerShot, lazerGun;
 
     [SerializeField]
+    private GameObject playerExplosion, shieldEffect, lifeEffect, speedEffect;
+
+    [SerializeField]
+    private float constShotDelay;
     private float shotDelay;
     private float nextShotTime = 0;
 
-    [SerializeField] private static float constSpeed = 30;
-    private static float speed;
+    [SerializeField] private float constSpeed = 30;
+    private float speed;
     [SerializeField] private float xMin, xMax, zMin, zMax;
     [SerializeField] private float tilt;
 
     Rigidbody ship;
 
+    [HideInInspector] public static bool speedBonus, shieldBonus, tripleFireBonus, fastFireBonus, lifeBonus = false;
+    float timer = 0;
+
+    Shader shader1;
+    Renderer rend;
+
     // Start is called before the first frame update
     void Start()
     {
         speed = constSpeed;
+        shotDelay = constShotDelay;
         ship = GetComponent<Rigidbody>();
+        rend = GetComponent<Renderer> ();
+        shader1 = Shader.Find("Standard");
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if(pause)
-        {
-            return;
-        }
-
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
         ship.velocity = new Vector3(moveHorizontal, 0, moveVertical) * speed; // x y z
         ship.rotation = Quaternion.Euler(ship.velocity.z * tilt, 0, -ship.velocity.x * tilt);
-        
+
         float correctX = Mathf.Clamp(ship.position.x, xMin, xMax);
         float correctZ = Mathf.Clamp(ship.position.z, zMin, zMax);
 
         ship.position = new Vector3(correctX, 0, correctZ);
 
-        if(Time.time > nextShotTime && Input.GetKey(KeyCode.Space))
+        if (tripleFireBonus)
+            castTripleFire();
+
+        if (speedBonus)
+            increaseSpeed(constSpeed*1.3f);
+
+        if (shieldBonus)
+            castShield();
+
+        if (fastFireBonus)
+            decreaseShotDelay();
+
+        if (lifeBonus)
+            addHeart();
+
+        if (Time.time > nextShotTime && !GameController.stageComplete)
         {
             Instantiate(lazerShot, lazerGun.transform.position, Quaternion.identity);
             nextShotTime = Time.time + shotDelay;
         }
 
-        //Instantiate(lazerShot, lazerGun.transform.position, Quaternion.identity);
+        if (GameController.gameOver == true)
+        {
+            Instantiate(playerExplosion, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+
     }
 
-    public static void castShield()
+
+    public void increaseSpeed(float speedMultiplier)
     {
-        bool shield = true;
+        speed = speedMultiplier;
+        timer += Time.deltaTime;
+        speedEffect.SetActive(true);
+        GetComponent<TrailRenderer>().enabled = true;
+        if (timer > 5)
+        {
+            speed = constSpeed;
+            timer = 0;
+            GetComponent<TrailRenderer>().enabled = false;
+            speedEffect.SetActive(false);
+            speedBonus = false;
+        }
+
     }
 
-    public static void decreaseSpeed()
+
+    public void castShield()
     {
-        Debug.Log("3 sec proshlo");
-        speed = constSpeed;
+        GameController.shield = true;
+        timer += Time.deltaTime;
+        shieldEffect.SetActive(true);
+        if (timer > 5)
+        {
+            timer = 0;
+            GameController.shield = false;
+            shieldEffect.SetActive(false);
+            shieldBonus = false;
+        }
     }
 
-    public static void increaseSpeed(float speedMultiplier)
+    public void castTripleFire()
     {
-        speed = speed * speedMultiplier;
+        LazerScript.tripleFire = true;
+        timer += Time.deltaTime;
+        if (timer > 6)
+        {
+            timer = 0;
+            LazerScript.tripleFire = false;
+            tripleFireBonus = false;
+        }
 
-        //float timer = 0;
-        //timer += Time.deltaTime;
-        //if(timer > 3)
-        //{
-        //    Debug.Log("3 sec proshlo");
-        //    speed = constSpeed;
-        //}
     }
 
-    public static void decreaseSpeed()
+    public void decreaseShotDelay()
     {
-        Debug.Log("3 sec proshlo");
-        speed = constSpeed;
+        shotDelay = 0.2f;
+        timer += Time.deltaTime;
+        if (timer > 5)
+        {
+            timer = 0;
+            shotDelay = constShotDelay;
+            fastFireBonus = false;
+        }
     }
 
-    public static void castShield()
+    public void addHeart()
     {
-        bool shield = true;
+        Instantiate(lifeEffect, transform.position, Quaternion.identity);
+        GameController.increaseLives();
+        lifeBonus = false;
     }
+
+    public void getDamaged()
+    {
+        rend.material.shader = shader1;
+    }
+
+
 }

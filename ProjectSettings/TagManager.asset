@@ -7,6 +7,9 @@ TagManager:
   - FxTemporaire
   - Bound
   - Asteroid
+  - Bonus
+  - Lazer
+  - Boss
   layers:
   - Default
   - TransparentFX
