@@ -23,6 +23,12 @@ public class EmitterScript : MonoBehaviour
     private float nextLaunchTime;
     private float acceleration = 1.0f;
 
+    void Start()
+    {
+        transform.localScale = new Vector3(Camera.main.orthographicSize*0.8f, 10, 10);
+        
+    }
+
     // Update is called once per frame
     void Update()
     {

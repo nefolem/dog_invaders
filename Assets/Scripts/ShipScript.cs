@@ -24,7 +24,7 @@ public class ShipScript : MonoBehaviour
     private float speed;
 
 
-    [SerializeField] private float xMin, xMax, zMin, zMax;
+    private float xMin, xMax, zMin, zMax;
     [SerializeField] private float tilt;
 
 
@@ -40,6 +40,11 @@ public class ShipScript : MonoBehaviour
         speed = constSpeed;
         shotDelay = constShotDelay;
         ship = GetComponent<Rigidbody>();
+        
+        zMax = Camera.main.orthographicSize*0.8f;
+        zMin = -zMax;
+        xMax = Camera.main.aspect * zMax;
+        xMin = -xMax;
     }
 
     // Update is called once per frame
@@ -50,8 +55,8 @@ public class ShipScript : MonoBehaviour
         float moveVertical = joystick.Vertical;
 
         ship.velocity = new Vector3(moveHorizontal, 0, moveVertical) * speed; // x y z
-        ship.rotation = Quaternion.Euler(ship.velocity.z * tilt, 0, -ship.velocity.x * tilt);
-
+        ship.rotation = Quaternion.Euler(ship.velocity.z * tilt, 0, -ship.velocity.x * tilt);        
+        
         float correctX = Mathf.Clamp(ship.position.x, xMin, xMax);
         float correctZ = Mathf.Clamp(ship.position.z, zMin, zMax);
 
