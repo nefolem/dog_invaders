@@ -39,6 +39,7 @@ public class StageCompleteMenu : MonoBehaviour
     public void Continue()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        GameController.isContinuePressed = true;
         Time.timeScale = 1f;
     }
 

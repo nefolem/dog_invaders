@@ -16,7 +16,6 @@ public class GameController : MonoBehaviour
 
     public Slider progressBar;
     public AudioMixer audioMixer;
-    //public AudioScript audioScript;
 
     public static int score;
     public static int bestScore;
@@ -30,9 +29,9 @@ public class GameController : MonoBehaviour
     public static bool bossFight = false;
     public static bool stopEmitter = false;
     public static bool stageComplete = false;
+    public static bool isContinuePressed;
 
     private float timer2, timer1 = 0;
-
 
 
     public static void increaseScore(int increment)
@@ -71,6 +70,7 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        bestScore = PlayerPrefs.GetInt("highscore");
         stageComplete = false;
         bossFight = false;
         stopEmitter = false;
@@ -78,8 +78,11 @@ public class GameController : MonoBehaviour
     }
     private void Start()
     {
-        score = 0;
-        lives = "♥♥♥";
+        if(!isContinuePressed)
+        {
+            score = 0;
+            lives = "♥♥♥";
+        }
     }
 
     void Update()
@@ -96,7 +99,7 @@ public class GameController : MonoBehaviour
 
         if (!stageComplete)
         {
-            if (score >= 500)
+            if ((score >= 500 && !isContinuePressed) || (score >= 1500 && isContinuePressed))
             {
                 stopEmitter = true;
                 warningText.SetActive(true);
@@ -123,8 +126,8 @@ public class GameController : MonoBehaviour
 
         if ((gameOver || stageComplete) && bestScore < score)
         {
-            //audioMixer.SetFloat("boss", 0);
-
+            PlayerPrefs.SetInt("highscore", score);
+            PlayerPrefs.Save();
             bestScore = score;
         }
 
