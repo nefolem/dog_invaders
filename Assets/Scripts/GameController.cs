@@ -72,6 +72,9 @@ public class GameController : MonoBehaviour
     private void Awake()
     {
         stageComplete = false;
+        bossFight = false;
+        stopEmitter = false;
+        StartCoroutine(CrossFade.EndFade(audioMixer, "vol1", 2, 3));
     }
     private void Start()
     {
@@ -122,6 +125,7 @@ public class GameController : MonoBehaviour
         if ((gameOver || stageComplete) && bestScore < score)
         {
             audioScript.BossFightSound(false);
+
             bestScore = score;
         }
 
