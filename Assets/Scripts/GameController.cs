@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
 
     public Slider progressBar;
     public AudioMixer audioMixer;
-    public AudioScript audioScript;
+    //public AudioScript audioScript;
 
     public static int score;
     public static int bestScore;
@@ -74,7 +74,7 @@ public class GameController : MonoBehaviour
         stageComplete = false;
         bossFight = false;
         stopEmitter = false;
-        StartCoroutine(CrossFade.EndFade(audioMixer, "vol1", 2, 3));
+        StartCoroutine(CrossFade.EndFade(audioMixer, "stage", 1, 1));
     }
     private void Start()
     {
@@ -102,8 +102,7 @@ public class GameController : MonoBehaviour
                 warningText.SetActive(true);
                 progressBar.gameObject.SetActive(false);
 
-                StartCoroutine(CrossFade.StartFade(audioMixer, "vol1", 3, 0));
-                audioScript.WarningSound();
+                StartCoroutine(CrossFade.StartFade(audioMixer, "stage", 3, 0));
             }
 
             if (stopEmitter)
@@ -113,18 +112,18 @@ public class GameController : MonoBehaviour
                 {
                     warningText.SetActive(false);
                     bossFight = true;
-                    audioScript.BossFightSound(true);
+                    //audioMixer.SetFloat("boss", 1);
 
                 }
             }
         }
-        else audioScript.BossFightSound(false);
+        //else audioMixer.SetFloat("boss", 0);
 
         livesLabel.text = "" + lives;
 
         if ((gameOver || stageComplete) && bestScore < score)
         {
-            audioScript.BossFightSound(false);
+            //audioMixer.SetFloat("boss", 0);
 
             bestScore = score;
         }
