@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
     public Slider progressBar;
     public AudioMixer audioMixer;
 
+
     public static int score;
     public static int bestScore;
 
@@ -48,13 +49,9 @@ public class GameController : MonoBehaviour
                 lives = lives.Remove(lives.Length - hearts);
                 if (lives.Length == 0)
                 {
-                    Debug.Log(lives.Length);
                     gameOver = true;
-                    Debug.Log(gameOver);
                 }
             }
-
-
         }
         else return;
     }

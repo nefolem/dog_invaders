@@ -9,7 +9,7 @@ public class ShipScript : MonoBehaviour
     private GameObject lazerShot, lazerGun;
 
     [SerializeField]
-    private GameObject playerExplosion, shieldEffect, lifeEffect, speedEffect;
+    private GameObject playerExplosion, playerDamaged, shieldEffect, lifeEffect, speedEffect;
 
     [SerializeField]
     private Joystick joystick;
@@ -40,8 +40,8 @@ public class ShipScript : MonoBehaviour
         speed = constSpeed;
         shotDelay = constShotDelay;
         ship = GetComponent<Rigidbody>();
-        
-        zMax = Camera.main.orthographicSize*0.8f;
+
+        zMax = Camera.main.orthographicSize * 0.8f;
         zMin = -zMax;
         xMax = Camera.main.aspect * zMax;
         xMin = -xMax;
@@ -55,8 +55,8 @@ public class ShipScript : MonoBehaviour
         float moveVertical = joystick.Vertical;
 
         ship.velocity = new Vector3(moveHorizontal, 0, moveVertical) * speed; // x y z
-        ship.rotation = Quaternion.Euler(ship.velocity.z * tilt, 0, -ship.velocity.x * tilt);        
-        
+        ship.rotation = Quaternion.Euler(ship.velocity.z * tilt, 0, -ship.velocity.x * tilt);
+
         float correctX = Mathf.Clamp(ship.position.x, xMin, xMax);
         float correctZ = Mathf.Clamp(ship.position.z, zMin, zMax);
 
@@ -66,7 +66,7 @@ public class ShipScript : MonoBehaviour
             castTripleFire();
 
         if (speedBonus)
-            increaseSpeed(constSpeed*1.3f);
+            increaseSpeed(constSpeed * 1.5f);
 
         if (shieldBonus)
             castShield();
@@ -89,6 +89,31 @@ public class ShipScript : MonoBehaviour
             Destroy(gameObject);
         }
 
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Bullet" || other.tag == "Asteroid")
+        {
+            GetDamaged();
+        }
+    }
+
+    void GetDamaged()
+    {
+        if (!GameController.shield)
+        {
+            GameController.decreaseLives(1);
+            //GameController.shield = true;
+            timer += Time.deltaTime;
+            playerDamaged.SetActive(true);
+            if (timer > 1)
+            {
+                timer = 0;
+                //GameController.shield = false;
+                playerDamaged.SetActive(false);
+            }
+        }
     }
 
     public void increaseSpeed(float speedMultiplier)
