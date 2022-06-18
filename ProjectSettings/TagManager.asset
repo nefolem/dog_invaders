@@ -10,6 +10,7 @@ TagManager:
   - Bonus
   - Lazer
   - Boss
+  - Bullet
   layers:
   - Default
   - TransparentFX

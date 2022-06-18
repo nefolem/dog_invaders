@@ -12,11 +12,11 @@ public class GameController : MonoBehaviour
     private TMP_Text scoreLabel, scoreLabel2, scoreLabel3, livesLabel, bestScoreLabel, bestScoreLabel2, bestScoreLabel3;
 
     [SerializeField]
-    private GameObject warningText;
+    private GameObject warningText, stageText;
 
     public Slider progressBar;
     public AudioMixer audioMixer;
-    public AudioScript audioScript;
+
 
     public static int score;
     public static int bestScore;
@@ -30,8 +30,9 @@ public class GameController : MonoBehaviour
     public static bool bossFight = false;
     public static bool stopEmitter = false;
     public static bool stageComplete = false;
+    public static bool isContinuePressed;
 
-    private float timer = 0;
+    private float timer2, timer1 = 0;
 
 
     public static void increaseScore(int increment)
@@ -48,13 +49,9 @@ public class GameController : MonoBehaviour
                 lives = lives.Remove(lives.Length - hearts);
                 if (lives.Length == 0)
                 {
-                    Debug.Log(lives.Length);
                     gameOver = true;
-                    Debug.Log(gameOver);
                 }
             }
-
-
         }
         else return;
     }
@@ -70,12 +67,19 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        bestScore = PlayerPrefs.GetInt("highscore");
         stageComplete = false;
+        bossFight = false;
+        stopEmitter = false;
+        StartCoroutine(CrossFade.EndFade(audioMixer, "stage", 1, 1));
     }
     private void Start()
     {
-        score = 0;
-        lives = "♥♥♥";
+        if(!isContinuePressed)
+        {
+            score = 0;
+            lives = "♥♥♥";
+        }
     }
 
     void Update()
@@ -84,37 +88,43 @@ public class GameController : MonoBehaviour
         scoreLabel2.text = scoreLabel3.text = " \n " + scoreLabel.text;
         progressBar.value = score;
 
+        timer1 += Time.deltaTime;
+        if (timer1 > 1.5f)
+        {
+            stageText.SetActive(false);
+        }
+
         if (!stageComplete)
         {
-            if (score >= 500)
+            if ((score >= 500 && !isContinuePressed) || (score >= 1500 && isContinuePressed))
             {
                 stopEmitter = true;
                 warningText.SetActive(true);
                 progressBar.gameObject.SetActive(false);
 
-                StartCoroutine(CrossFade.StartFade(audioMixer, "vol1", 3, 0));
-                audioScript.WarningSound();
+                StartCoroutine(CrossFade.StartFade(audioMixer, "stage", 3, 0));
             }
 
             if (stopEmitter)
             {
-                timer += Time.deltaTime;
-                if (timer > 4)
+                timer2 += Time.deltaTime;
+                if (timer2 > 4)
                 {
                     warningText.SetActive(false);
                     bossFight = true;
-                    audioScript.BossFightSound(true);
+                    //audioMixer.SetFloat("boss", 1);
 
                 }
             }
         }
-        else audioScript.BossFightSound(false);
+        //else audioMixer.SetFloat("boss", 0);
 
         livesLabel.text = "" + lives;
 
         if ((gameOver || stageComplete) && bestScore < score)
         {
-            audioScript.BossFightSound(false);
+            PlayerPrefs.SetInt("highscore", score);
+            PlayerPrefs.Save();
             bestScore = score;
         }
 
