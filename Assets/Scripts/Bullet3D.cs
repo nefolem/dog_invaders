@@ -14,7 +14,7 @@ public class Bullet3D : MonoBehaviour
                 // Debug.Log("boom");
                 
             }
-            GameController.decreaseLives(1);
+            //GameController.decreaseLives(1);
             Destroy(gameObject);
         } 
         else
